@@ -4,5 +4,72 @@
     <string name="app_name">TrackEm_Glass</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+	<string name="preferences">Preferences</string>
+    <string name="graph">Graph</string>
+    <string name="tuner">Tuner</string>
+    <string name="staff">Staff</string>
+    <string name="artsy">Artsy</string>
+    
+    <string name="frequency_graph">Frequency Graph</string>
+    <string name="fft_graph">FFT Graph</string>
+    <string name="raw_buffer_graph">Raw Buffer Graph</string>
+    
+    <string name="tuner_negCent_descrip">Cents Flat</string>
+    <string name="tuner_note_descrip">Note</string>
+    <string name="tuner_posCent_descrip">Cents Sharp</string>
+    
+    <!-- Start Preference Strings -->
+    <string name="prefs_graph_prefs">Graph Preferences</string>
+    <string name="prefs_tuner_prefs">Tuner Preferences</string>
+    <string name="prefs_buffer_size">FFT Buffer Size</string>
+    <string name="prefs_buffer_size_summary">
+        Defines the size of the Fast Fourier Transform buffer. Trades accuracy for speed.
+    </string>
+    <string name="prefs_show_raw_buffer">Show Raw Audio Graph</string>
+    <string name="prefs_show_raw_buffer_summary">
+        Toggle to show or hide the raw audio input graph.
+    </string>
+    <string name="prefs_show_fft_buffer">Show FFT Graph</string>
+    <string name="prefs_show_fft_buffer_summary">
+        Toggle to show or hide the FFT graph.
+    </string>
+    <string name="prefs_show_frequency_graph">Show Frequency Graph</string>
+    <string name="prefs_show_frequency_graph_summary">
+        Toggle to show or hide the frequency graph.
+    </string>
+    <string name="prefs_filter_type">Raw Buffer Filter</string>
+    <string name="prefs_filter_type_summary">
+		Choose a low-pass filter to determine how the audio
+		tapers off higher frequency noises and harmonics.
+    </string>
+    <string name="prefs_sample_rate">Sample Rate</string>
+    <string name="prefs_sample_rate_summary">
+        Choose a sample rate at which the raw audio is sampled. The only
+        sample rate that is verified to work on all devices is 8000Hz.
+    </string>
+    <string name="prefs_center_pitch">Concert Pitch</string>
+    <string name="prefs_center_pitch_summary">
+        Choose a center pitch to be the pitch standard for tuning.
+    </string>
+    <string name="prefs_filter_passes_count">Filter Pass Count</string>
+    <string name="prefs_filter_passes_count_summary">
+        Choose the amount of passes through the low-pass filter. The more
+        passes, the more attenuation occurs in the upper frequencies.
+    </string>
+    <!-- End Preference Strings -->
+    
+    <!-- About Text Fragment... -->
+    <string name="about">About</string>
+    <string name="about_text">
+        Author: Adam Eichelkraut\n
+        Date Updated: 4/24/14\n
+        \nDescription\n
+        This app leans more on the side of a \'frequency analyzer\' rather than
+        a full-blown tuner. The reasoning for this is because of the difficulties
+        in pitch-detection. Pitch-detection requires much more than simply finding
+        the frequency via the Fast Fourier Transform, although, we can get close by
+        hacking some filters in to filter out the higher harmonics.\n
+        \nAny questions can be emailed to Adam Eichelkraut at ake0005@tigermail.auburn.edu
+    </string>
 
 </resources>
