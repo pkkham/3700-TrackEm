@@ -1,10 +1,9 @@
 package com.example.trackem_glass;
 
-import android.view.View;
-import android.os.Handler;
-import android.support.v4.app.FragmentActivity;
-import android.widget.Button;
-import android.widget.TextView;
+import android.app.Activity;
+
+import com.example.trackem_glass.TrackEmActivity.PlaceholderFragment.OnTimeUpdateListener;
+
 
 /*
  * Handles stop watch functionality of TrackEm.
@@ -20,17 +19,32 @@ public class StopWatchUtility {
 	private String hours, minutes, seconds, milliseconds;
 	private long secs, mins, hrs, msecs;
 	private boolean stopped = false;
+	private UpdateThread m_thread;
+	private Activity m_activity;	//Hosting activity
+	
+	//interfaces
+	private OnTimeUpdateListener m_time_update_listener;
 
-	public StopWatchUtility() {
-
+	public StopWatchUtility(Activity hostingActivity) {
+		m_activity = hostingActivity;
 	}
+	
+	public void setOnTimeUpdateListener(OnTimeUpdateListener l)
+	{ m_time_update_listener = l; }
 
-	public void startWatch(View view) {
+	public void startWatch() {
 		stopped = false;
 		startTime = System.currentTimeMillis();
+		m_thread = new UpdateThread(refreshRate);
+		m_thread.start();
 	}
 
-	public void stopWatch(View view) {
+	public void stopWatch() {
+		if (m_thread != null)
+		{
+			m_thread.stopLoopThread();
+			m_thread = null;
+		}
 		stopped = true;
 	}
 
@@ -79,6 +93,7 @@ public class StopWatchUtility {
 	}
 	
 	private class UpdateThread extends LoopThread {
+		private Integer i = 0;
 
 		public UpdateThread(int delay) {
 			super(refreshRate);
@@ -87,10 +102,16 @@ public class StopWatchUtility {
 
 		@Override
 		protected void loopProcess() {
-			// TODO Auto-generated method stub
-			
-			updateTimer(System.currentTimeMillis());
-			
+			i++;
+			m_activity.runOnUiThread(new Runnable() 
+			{
+			     @Override
+			     public void run() 
+			     {
+						//m_time_update_listener.onTimeUpdate(updateTimer(System.currentTimeMillis()));
+						m_time_update_listener.onTimeUpdate(i.toString());
+			     }
+			});
 		}
 		
 	}
