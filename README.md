@@ -2,15 +2,15 @@
 ============
 
 AUTHORS
-  Adam Eichelkraut
-  Tyler Hoover
-  Jonathan Hart
-  Jared Brown
-  Anna Fears
-  Priscilla Kristina Khamken
-  Ryan Vincent
-  Amyeric Zuurhout
-  Adam Blood
+  - Adam Eichelkraut : Developer/Lead
+  - Tyler Hoover : Developer
+  - Jonathan Hart : Developer
+  - Jared Brown : Testing
+  - Anna Fears : Documentation
+  - Priscilla Kristina Khamken : Documentation
+  - Ryan Vincent : Testing
+  - Amyeric Zuurhout : Documentation
+  - Adam Blood : Documentation
 
 HOW TO RUN
   This application should run on any device running API level
