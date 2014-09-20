@@ -1,6 +1,17 @@
 3700-TrackEm
 ============
 
+AUTHORS
+  Adam Eichelkraut
+  Tyler Hoover
+  Jonathan Hart
+  Jared Brown
+  Anna Fears
+  Priscilla Kristina Khamken
+  Ryan Vincent
+  Amyeric Zuurhout
+  Adam Blood
+
 HOW TO RUN
   This application should run on any device running API level
   11 or higher. Below are steps to run this application on an
