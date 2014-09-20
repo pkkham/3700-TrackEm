@@ -55,9 +55,10 @@ public class StopWatchUtility {
 
 
 	private String updateTimer(float time) {
-		secs = (long) (time / 1000);
-		mins = (long) ((time / 1000) / 60);
-		hrs = (long) (((time / 1000) / 60) / 60);
+		float currentTime = startTime - time;
+		secs = (long) (currentTime / 1000);
+		mins = (long) ((currentTime / 1000) / 60);
+		hrs = (long) (((currentTime / 1000) / 60) / 60);
 		secs = secs % 60;
 		seconds = String.valueOf(secs);
 		if (secs == 0) {
@@ -83,7 +84,7 @@ public class StopWatchUtility {
 		if (hrs < 10 && hrs > 0) {
 			hours = "0" + hours;
 		}
-		milliseconds = String.valueOf((long) time);
+		milliseconds = String.valueOf((long) currentTime);
 		if (milliseconds.length() == 2) {
 			milliseconds = "0" + milliseconds;
 		}
