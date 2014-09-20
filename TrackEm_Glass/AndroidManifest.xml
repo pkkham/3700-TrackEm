@@ -25,6 +25,10 @@
         <activity
             android:name="com.example.trackem_glass.SettingsActivity"
             android:label="@string/app_name" />
+        <uses-library android:name="android.test.runner" />
     </application>
-
+	
+    <instrumentation android:name="android.test.InstrumentationTestRunner"
+   		 	android:targetPackage="com.example.trackem_glass"
+    		android:label="activity tests" />
 </manifest>
