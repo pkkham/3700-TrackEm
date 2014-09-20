@@ -19,74 +19,67 @@ package com.example.trackem_glass;
 //Imports
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-public abstract class LoopThread extends Thread
-{
+public abstract class LoopThread extends Thread {
 
-	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	//Public Constants
+	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	// Public Constants
 	public static final int DEFAULT_DELAY = 100;
 	public static final int NO_DELAY = 0;
-	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	//Member Variables
-	private int m_delay; //millisecond delay
+	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	// Member Variables
+	private int m_delay; // millisecond delay
 	private boolean m_continue;
 
-	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// LoopThread(int)
-	//	PURPOSE: Constructor takes an integer that represents
-	//		the amount of milliseconds between each thread
-	//		process. Mainly for visually seeing logging.
-	//	PARAMETERS:
-	//		delay: amount to delay
-	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	public LoopThread(int delay) 
-	{
+	// PURPOSE: Constructor takes an integer that represents
+	// the amount of milliseconds between each thread
+	// process. Mainly for visually seeing logging.
+	// PARAMETERS:
+	// delay: amount to delay
+	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	public LoopThread(int delay) {
 		super();
 		m_delay = delay;
 	}
 
-	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// loopProcess()
-	//	PURPOSE: Abstract method that must be overridden
-	//		by derived classes. Defines the processes
-	//		that will occur on each repetition.
-	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	// PURPOSE: Abstract method that must be overridden
+	// by derived classes. Defines the processes
+	// that will occur on each repetition.
+	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	protected abstract void loopProcess();
 
-	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// run()
-	//	PURPOSE: Method defines the thread's overridden
-	//		abstract method. While continue is true,
-	//		keep looping the abstract loopProcess method
-	//		and sleep if there is a delay.
-	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	public void run()
-	{
+	// PURPOSE: Method defines the thread's overridden
+	// abstract method. While continue is true,
+	// keep looping the abstract loopProcess method
+	// and sleep if there is a delay.
+	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	public void run() {
 		m_continue = true;
 
-		while (m_continue) 
-		{
+		while (m_continue) {
 			loopProcess();
-			if (m_delay > 0)
-			{
-				try 
-				{
+			if (m_delay > 0) {
+				try {
 					this.sleep(m_delay);
+				} catch (InterruptedException ie) {
 				}
-				catch (InterruptedException ie) {}
 			}
 		}
 	}
 
-	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// stopLoopThread()
-	//	PURPOSE: Method interrupts the current thread by
-	//		setting the continuation boolean to false,
-	//		causing the loop to exit. Also, if sleeping,
-	//		the method calls the interrupt method.
-	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	public void stopLoopThread()
-	{
+	// PURPOSE: Method interrupts the current thread by
+	// setting the continuation boolean to false,
+	// causing the loop to exit. Also, if sleeping,
+	// the method calls the interrupt method.
+	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	public void stopLoopThread() {
 		m_continue = false;
 		this.interrupt();
 	}
