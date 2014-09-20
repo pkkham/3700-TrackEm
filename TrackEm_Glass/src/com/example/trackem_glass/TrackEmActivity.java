@@ -13,14 +13,16 @@ package com.example.trackem_glass;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -67,36 +69,36 @@ public class TrackEmActivity extends FragmentActivity {
 
 // ============================================================================
 // Options Menu Call Backs
-  	@Override
-  	public boolean onCreateOptionsMenu(Menu menu) {
-  		//When the options menu is created, we want to 'inflate'
-  		//the XML file that we have set up in res/menu. This creates
-  		//the UI for our options menu...
-  		getMenuInflater().inflate(R.menu.track_em, menu);
-  		return super.onCreateOptionsMenu(menu);
-  	}
-  	
-  	@Override
-  	public boolean onOptionsItemSelected(MenuItem item)
-  	{
-  		//Switch around the id's that are declared in the
-  		//XML file res/menu/track_em.xml (the layout we inflated)
-  		switch (item.getItemId())
-  		{
-  		
-  		//If it is the 'preferences' menu item, start a new Activity that
-  		//will lay on top of this one. It is started with what is called
-  		//and 'Intent' and sent to the underlying Android runtime system
-  		//to be processed and created.
-  		case R.id.ab_preferences:
-  			Intent intent = new Intent(this, SettingsActivity.class);
-  			startActivity(intent);
-  			break;
-  		default:
-  			return false;
-  		}
-  		return true;
-  	}
+//  	@Override
+//  	public boolean onCreateOptionsMenu(Menu menu) {
+//  		//When the options menu is created, we want to 'inflate'
+//  		//the XML file that we have set up in res/menu. This creates
+//  		//the UI for our options menu...
+//  		getMenuInflater().inflate(R.menu.track_em, menu);
+//  		return super.onCreateOptionsMenu(menu);
+//  	}
+//  	
+//  	@Override
+//  	public boolean onOptionsItemSelected(MenuItem item)
+//  	{
+//  		//Switch around the id's that are declared in the
+//  		//XML file res/menu/track_em.xml (the layout we inflated)
+//  		switch (item.getItemId())
+//  		{
+//  		
+//  		//If it is the 'preferences' menu item, start a new Activity that
+//  		//will lay on top of this one. It is started with what is called
+//  		//and 'Intent' and sent to the underlying Android runtime system
+//  		//to be processed and created.
+//  		case R.id.ab_preferences:
+//  			Intent intent = new Intent(this, SettingsActivity.class);
+//  			startActivity(intent);
+//  			break;
+//  		default:
+//  			return false;
+//  		}
+//  		return true;
+//  	}
 // ============================================================================
 
   	
@@ -113,6 +115,8 @@ public class TrackEmActivity extends FragmentActivity {
     	private boolean m_started;
     	private StopWatchUtility m_stopwatch;
     	
+    	private SharedPreferences m_prefs;
+    	
     	
     	public interface OnTimeUpdateListener
     	{
@@ -122,6 +126,10 @@ public class TrackEmActivity extends FragmentActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
+        	
+        	setHasOptionsMenu(true);
+        	
+        	m_prefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
         	
         	LinearLayout.LayoutParams wrapContent = new LinearLayout.LayoutParams(
     				LinearLayout.LayoutParams.WRAP_CONTENT, 
@@ -163,6 +171,13 @@ public class TrackEmActivity extends FragmentActivity {
             return rootView;
         }
         
+        public void onResume()
+        {
+        	super.onResume();
+        	int refreshRate = Integer.parseInt(m_prefs.getString(SettingsActivity.PREFS_TIMER_REFRESH_RATE, "100"));
+        	m_stopwatch.setRefreshRate(refreshRate);
+        }
+        
         @Override
         public void onStop()
         {
@@ -173,6 +188,37 @@ public class TrackEmActivity extends FragmentActivity {
         		m_started = false;
         	}
         }
+        
+      	@Override
+      	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+      		//When the options menu is created, we want to 'inflate'
+      		//the XML file that we have set up in res/menu. This creates
+      		//the UI for our options menu...
+      		super.onCreateOptionsMenu(menu, inflater);
+      		inflater.inflate(R.menu.fragment_track_em, menu);
+      	}
+      	
+      	@Override
+      	public boolean onOptionsItemSelected(MenuItem item)
+      	{
+      		//Switch around the id's that are declared in the
+      		//XML file res/menu/track_em.xml (the layout we inflated)
+      		switch (item.getItemId())
+      		{
+      		
+      		//If it is the 'preferences' menu item, start a new Activity that
+      		//will lay on top of this one. It is started with what is called
+      		//and 'Intent' and sent to the underlying Android runtime system
+      		//to be processed and created.
+      		case R.id.menu_item_preferences:
+      			Intent intent = new Intent(this.getActivity(), SettingsActivity.class);
+      			startActivity(intent);
+      			break;
+      		default:
+      			return false;
+      		}
+      		return true;
+      	}
     }
     
     public static class TimeUpdateView extends TextView implements OnTimeUpdateListener

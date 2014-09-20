@@ -21,13 +21,7 @@ public class SettingsActivity extends Activity {
 	//Public constants 
 	//These constants correspond to the ones defined in the preferences file.
 	//See res/xml/preferences.xml
-	public static final String PREFS_BUFFER_SIZE = "prefs_buffer_size";
-	public static final String PREFS_FILTER_COUNT = "prefs_filter_passes_count";
-	public static final String PREFS_CONCERT_PITCH = "prefs_center_pitch";
-	public static final String PREFS_SHOW_RAW_BUFFER = "prefs_show_raw_buffer";
-	public static final String PREFS_SHOW_FFT_BUFFER = "prefs_show_fft_buffer";
-	public static final String PREFS_SHOW_FREQUENCY_GRAPH = "prefs_show_frequency_graph";
-	public static final String PREFS_SAMPLE_RATE = "prefs_sample_rate";
+	public static final String PREFS_TIMER_REFRESH_RATE = "prefs_timer_refresh_rate";
 
 // ============================================================================
 //Life Cycle Methods

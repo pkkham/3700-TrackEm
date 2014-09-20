@@ -3,10 +3,10 @@
     <PreferenceCategory 
         android:title="@string/prefs_timer_prefs">
         <ListPreference 
-            android:key="prefs_buffer_size"
+            android:key="prefs_timer_refresh_rate"
             android:title="@string/prefs_timer_refresh_title"
             android:entries="@array/prefs_timer_refresh_rates"
             android:entryValues="@array/prefs_timer_refresh_rates"
-            android:defaultValue="0.1" />
+            android:defaultValue="100" />
     </PreferenceCategory>
 </PreferenceScreen>

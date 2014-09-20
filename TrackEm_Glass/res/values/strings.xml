@@ -19,6 +19,7 @@
     <string name="tuner_posCent_descrip">Cents Sharp</string>
     
     <!-- Start Preference Strings -->
+    <string name="title_preferences">Preferences</string>
     <string name="prefs_timer_prefs">Timer Preferences</string>
     <string name="prefs_timer_refresh_title">Refresh Rate</string>
     

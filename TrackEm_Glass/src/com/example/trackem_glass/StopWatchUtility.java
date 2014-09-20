@@ -31,6 +31,11 @@ public class StopWatchUtility {
 	
 	public void setOnTimeUpdateListener(OnTimeUpdateListener l)
 	{ m_time_update_listener = l; }
+	
+	public void setRefreshRate(int rate)
+	{
+		refreshRate = rate;
+	}
 
 	public void startWatch() {
 		stopped = false;
