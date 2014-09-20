@@ -1,40 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="prefs_buffer_size_entries_values">
-        <item>512</item>
-        <item>1024</item>
-        <item>2048</item>
-        <item>4096</item>
-        <item>8192</item>
-        <item>16384</item>
-        <item>32768</item>
-    </string-array>
-    
-    <string-array name="prefs_filter_type_entries_values">
-        <item>Butterworth 2nd-Order</item>
-    </string-array>
-    
-    <string-array name="prefs_sample_rate_entries_values">
-        <item>8000</item>
-        <item>11025</item>
-        <item>16000</item>
-        <item>22050</item>
-        <item>44100</item>
-    </string-array>
-    
-    <string-array name="prefs_center_pitch_entries_values">
-        <item>415</item>
-        <item>432</item>
-        <item>435</item>
-        <item>440</item>
-        <item>466</item>
-    </string-array>
-    <string-array name="prefs_filter_passes_count_entries_values">
-        <item>0</item>
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-        <item>5</item>
+    <string-array name="prefs_timer_refresh_rates">
+        <item>0.1</item>
+        <item>0.2</item>
+        <item>0.3</item>
+        <item>0.4</item>
+        <item>0.5</item>
     </string-array>
 </resources>

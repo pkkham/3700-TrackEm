@@ -1,59 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"> 
     <PreferenceCategory 
-        android:title="@string/prefs_graph_prefs">
+        android:title="@string/prefs_timer_prefs">
         <ListPreference 
             android:key="prefs_buffer_size"
-            android:title="@string/prefs_buffer_size"
-            android:entries="@array/prefs_buffer_size_entries_values"
-            android:entryValues="@array/prefs_buffer_size_entries_values"
-            android:defaultValue="1024"
-            android:summary="@string/prefs_buffer_size_summary"/>
-        <ListPreference 
-            android:key="prefs_filter_passes_count"
-            android:title="@string/prefs_filter_passes_count"
-            android:entries="@array/prefs_filter_passes_count_entries_values"
-            android:entryValues="@array/prefs_filter_passes_count_entries_values"
-            android:defaultValue="3"
-            android:summary="@string/prefs_filter_passes_count_summary"/>
-        <ListPreference 
-            android:key="prefs_sample_rate"
-            android:title="@string/prefs_sample_rate"
-            android:entries="@array/prefs_sample_rate_entries_values"
-            android:entryValues="@array/prefs_sample_rate_entries_values"
-            android:defaultValue="8000"
-            android:summary="@string/prefs_sample_rate_summary"/>
-        <ListPreference 
-            android:key="prefs_filter_type"
-            android:title="@string/prefs_filter_type"
-            android:entries="@array/prefs_filter_type_entries_values"
-            android:entryValues="@array/prefs_filter_type_entries_values"
-            android:defaultValue="Butterworth 2nd-Order"
-            android:summary="@string/prefs_filter_type_summary"/>
-        <CheckBoxPreference 
-            android:key="prefs_show_raw_buffer"
-            android:title="@string/prefs_show_raw_buffer"
-            android:defaultValue="true"
-            android:summary="@string/prefs_show_raw_buffer_summary"/>
-     	<CheckBoxPreference 
-            android:key="prefs_show_fft_buffer"
-            android:title="@string/prefs_show_fft_buffer"
-            android:defaultValue="true"
-            android:summary="@string/prefs_show_fft_buffer_summary"/>
-        <CheckBoxPreference 
-            android:key="prefs_show_frequency_graph"
-            android:title="@string/prefs_show_frequency_graph"
-            android:defaultValue="true"
-            android:summary="@string/prefs_show_frequency_graph_summary"/>      
-    </PreferenceCategory>
-    <PreferenceCategory
-        android:title="@string/prefs_tuner_prefs">
-        <ListPreference 
-            android:key="prefs_center_pitch"
-            android:title="@string/prefs_center_pitch"
-            android:entries="@array/prefs_center_pitch_entries_values"
-            android:entryValues="@array/prefs_center_pitch_entries_values"
-            android:defaultValue="440"
-            android:summary="@string/prefs_center_pitch_summary"/>
+            android:title="@string/prefs_timer_refresh_title"
+            android:entries="@array/prefs_timer_refresh_rates"
+            android:entryValues="@array/prefs_timer_refresh_rates"
+            android:defaultValue="0.1" />
     </PreferenceCategory>
 </PreferenceScreen>
