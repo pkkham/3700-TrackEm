@@ -11,24 +11,10 @@
 */
 package com.example.trackem_glass;
 
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-
-import com.example.trackem_glass.TrackEmActivity.PlaceholderFragment.OnTimeUpdateListener;
 
 public class TrackEmActivity extends FragmentActivity {
 
@@ -55,188 +41,24 @@ public class TrackEmActivity extends FragmentActivity {
         //that pertain to external XML or other resources
         setContentView(R.layout.activity_track_em);
         
-        //If we are starting out fresh from startup, we want
-        //to create a fragment and add it to the view.
-        //R.id.container is the UI spot for this fragment.
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment())
-                    .commit();
-        }
-    }
-// ============================================================================
-
-
-// ============================================================================
-// Options Menu Call Backs
-//  	@Override
-//  	public boolean onCreateOptionsMenu(Menu menu) {
-//  		//When the options menu is created, we want to 'inflate'
-//  		//the XML file that we have set up in res/menu. This creates
-//  		//the UI for our options menu...
-//  		getMenuInflater().inflate(R.menu.track_em, menu);
-//  		return super.onCreateOptionsMenu(menu);
-//  	}
-//  	
-//  	@Override
-//  	public boolean onOptionsItemSelected(MenuItem item)
-//  	{
-//  		//Switch around the id's that are declared in the
-//  		//XML file res/menu/track_em.xml (the layout we inflated)
-//  		switch (item.getItemId())
-//  		{
-//  		
-//  		//If it is the 'preferences' menu item, start a new Activity that
-//  		//will lay on top of this one. It is started with what is called
-//  		//and 'Intent' and sent to the underlying Android runtime system
-//  		//to be processed and created.
-//  		case R.id.ab_preferences:
-//  			Intent intent = new Intent(this, SettingsActivity.class);
-//  			startActivity(intent);
-//  			break;
-//  		default:
-//  			return false;
-//  		}
-//  		return true;
-//  	}
-// ============================================================================
-
-  	
-// ============================================================================
-// This will be deleted eventually...just a 'Hello World' for now...
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-
-    	private LinearLayout m_main;
-    	private TimeUpdateView m_updateTextView;
-    	private Button m_start_stop;
-    	private boolean m_started;
-    	private StopWatchUtility m_stopwatch;
-    	
-    	private SharedPreferences m_prefs;
-    	
-    	
-    	public interface OnTimeUpdateListener
-    	{
-    		public void onTimeUpdate(String nextTime);
-    	}
-    	
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
-        	
-        	setHasOptionsMenu(true);
-        	
-        	m_prefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
-        	
-        	LinearLayout.LayoutParams wrapContent = new LinearLayout.LayoutParams(
-    				LinearLayout.LayoutParams.WRAP_CONTENT, 
-    				LinearLayout.LayoutParams.WRAP_CONTENT);
-        	
-        	m_stopwatch = new StopWatchUtility(this.getActivity());        	
-            View rootView = inflater.inflate(R.layout.fragment_track_em, container, false);
-            
-            m_main = (LinearLayout)rootView.findViewById(R.id.main_layout_fragment_track_em);
-            m_updateTextView = new TimeUpdateView(getActivity());
-            m_updateTextView.setText("TEST");
-            m_stopwatch.setOnTimeUpdateListener((OnTimeUpdateListener) m_updateTextView);
-            m_main.setLayoutParams(wrapContent);
-            m_main.addView(m_updateTextView);
-            
-            m_start_stop = (Button)rootView.findViewById(R.id.start_stop_button);
-            m_start_stop.setText("Start");
-            m_started = false;
-            
-            m_start_stop.setOnClickListener(new View.OnClickListener() {
-				
-				@Override
-				public void onClick(View v) {
-					if (m_started)
-					{
-						m_started = false;
-						m_start_stop.setText("Start");
-						m_stopwatch.stopWatch();
-					}
-					else
-					{
-						m_started = true;
-						m_start_stop.setText("Stop");
-						m_stopwatch.startWatch();
-					}
-				}
-			});
-            
-            return rootView;
-        }
-        
-        public void onResume()
+        /*
+         * First we ask the FragmentManager for the fragment located in
+         * the R.id.container. If this is already created, it will return
+         * that fragment, otherwise it'll return null.
+         * 
+         * Why would the fragment already be in the list? This activity could
+         * be recreated after being destroyed on rotation or to reclaim memory.
+         * When an activity is destroyed, it saves out its list of fragments.
+         * When recreated, the FragmentManager retrieves the list and recreates
+         * the listed fragments to make everything as it was before...
+         */
+        FragmentManager fm = getFragmentManager();
+        Fragment fragment = fm.findFragmentById(R.id.container);
+        if (fragment == null) 
         {
-        	super.onResume();
-        	int refreshRate = Integer.parseInt(m_prefs.getString(SettingsActivity.PREFS_TIMER_REFRESH_RATE, "100"));
-        	m_stopwatch.setRefreshRate(refreshRate);
+        	fragment = new TrackEmFragment();
+            fm.beginTransaction().add(R.id.container, fragment).commit();
         }
-        
-        @Override
-        public void onStop()
-        {
-        	super.onStop();
-        	if (m_started)
-        	{
-        		m_stopwatch.stopWatch();
-        		m_started = false;
-        	}
-        }
-        
-      	@Override
-      	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-      		//When the options menu is created, we want to 'inflate'
-      		//the XML file that we have set up in res/menu. This creates
-      		//the UI for our options menu...
-      		super.onCreateOptionsMenu(menu, inflater);
-      		inflater.inflate(R.menu.fragment_track_em, menu);
-      	}
-      	
-      	@Override
-      	public boolean onOptionsItemSelected(MenuItem item)
-      	{
-      		//Switch around the id's that are declared in the
-      		//XML file res/menu/track_em.xml (the layout we inflated)
-      		switch (item.getItemId())
-      		{
-      		
-      		//If it is the 'preferences' menu item, start a new Activity that
-      		//will lay on top of this one. It is started with what is called
-      		//and 'Intent' and sent to the underlying Android runtime system
-      		//to be processed and created.
-      		case R.id.menu_item_preferences:
-      			Intent intent = new Intent(this.getActivity(), SettingsActivity.class);
-      			startActivity(intent);
-      			break;
-      		default:
-      			return false;
-      		}
-      		return true;
-      	}
     }
-    
-    public static class TimeUpdateView extends TextView implements OnTimeUpdateListener
-    {
-
-		public TimeUpdateView(Context context) {
-			super(context);
-			
-		}
-
-		@Override
-		public void onTimeUpdate(String nextTime) {
-			this.setText(nextTime);
-		}
-		
-		
-    	
-    }
- //============================================================================
 
 } //TrackEmActivity

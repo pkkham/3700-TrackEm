@@ -2,8 +2,6 @@ package com.example.trackem_glass;
 
 import android.app.Activity;
 
-import com.example.trackem_glass.TrackEmActivity.PlaceholderFragment.OnTimeUpdateListener;
-
 
 /*
  * Handles stop watch functionality of TrackEm.
@@ -22,9 +20,19 @@ public class StopWatchUtility {
 	private UpdateThread m_thread;
 	private Activity m_activity;	//Hosting activity
 	
-	//interfaces
+	
+	//=========================================================================
+	// Interfaces
+	
+	// Relays time information to listeners
+	public interface OnTimeUpdateListener
+	{
+		public void onTimeUpdate(String nextTime);
+	}
 	private OnTimeUpdateListener m_time_update_listener;
-
+	
+	//=========================================================================
+	
 	public StopWatchUtility(Activity hostingActivity) {
 		m_activity = hostingActivity;
 	}
@@ -54,68 +62,74 @@ public class StopWatchUtility {
 	}
 
 
-	private String updateTimer(float time) {
-		float currentTime = startTime - time;
-		secs = (long) (currentTime / 1000);
-		mins = (long) ((currentTime / 1000) / 60);
-		hrs = (long) (((currentTime / 1000) / 60) / 60);
-		secs = secs % 60;
-		seconds = String.valueOf(secs);
-		if (secs == 0) {
-			seconds = "00";
-		}
-		if (secs < 10 && secs > 0) {
-			seconds = "0" + seconds;
-		}
-		mins = mins % 60;
-		minutes = String.valueOf(mins);
-
-		if (mins == 0) {
-			minutes = "00";
-		}
-
-		if (mins < 10 && mins > 0) {
-			minutes = "0" + minutes;
-		}
-		hours = String.valueOf(hrs);
-		if (hrs == 0) {
-			hours = "00";
-		}
-		if (hrs < 10 && hrs > 0) {
-			hours = "0" + hours;
-		}
-		milliseconds = String.valueOf((long) currentTime);
-		if (milliseconds.length() == 2) {
-			milliseconds = "0" + milliseconds;
-		}
-		if (milliseconds.length() <= 1) {
-			milliseconds = "00";
-		}
-		milliseconds = milliseconds.substring(milliseconds.length() - 3,
-				milliseconds.length() - 2);
-		
-		return hours + ":" + minutes + ":" + seconds;
-
-	}
+    private String updateTimer(long time) {
+        float currentTime = time - startTime; //get how much time has passed
+        float miliTime = time - startTime;
+        currentTime /= 1000; //get time down to seconds
+        
+        int hours = (int)(currentTime / 3600);
+        int minutes = (int)((currentTime % 3600)/60);
+        int seconds = (int)((currentTime % 3600) % 60);
+        int miliseconds = (int)(miliTime - ((hours * 3600 * 1000) + (minutes * 60 * 1000) + (seconds * 1000)));
+        String hrs = "";
+        String mins = "";
+        String secs = "";
+        String milis = "";
+        
+        
+        if (hours < 1) {
+            hrs = "00";
+        } else if (hours < 10) {
+            hrs = "0" + hours;
+        } else {
+            hrs += hours;
+        }
+        
+        if (minutes < 1) {
+            mins = "00";
+        } else if (minutes < 10) {
+            mins = "0" + minutes;
+        } else {
+            mins += minutes;
+        }
+        
+        if (seconds < 1) {
+            secs = "00";
+        } else if (seconds < 10) {
+            secs = "0" + seconds;
+        } else {
+            secs += seconds;
+        }
+        
+        if (miliseconds < 1) {
+            milis = "00";
+        } else if (miliseconds < 10) {
+            milis = "0" + miliseconds;
+        } else {
+            milis += (int)(miliseconds/10);
+        }
+        
+        
+        
+        
+        return (hours + ":" + mins + ":" + secs + ":" + milis);
+        
+    }
 	
 	private class UpdateThread extends LoopThread {
-		private Integer i = 0;
 
 		public UpdateThread(int delay) {
 			super(refreshRate);
-			
 		}
 
 		@Override
 		protected void loopProcess() {
-			i++;
 			m_activity.runOnUiThread(new Runnable() 
 			{
 			     @Override
 			     public void run() 
 			     {
-						//m_time_update_listener.onTimeUpdate(updateTimer(System.currentTimeMillis()));
-						m_time_update_listener.onTimeUpdate(i.toString());
+						m_time_update_listener.onTimeUpdate(updateTimer(System.currentTimeMillis()));
 			     }
 			});
 		}
